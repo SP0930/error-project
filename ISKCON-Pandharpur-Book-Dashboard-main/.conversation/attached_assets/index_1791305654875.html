@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ISKCON पंढरपूर · पुस्तक व्यवस्थापन</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);--bg:#eef3f8;--card:#fff;--ink:#14243a;--mute:#5d6f86;--line:#dbe4ee;--saf:#e8771a;--saf-bg:#fde8d2;--pea:#0f3b5f;--tea:#0f8b8d;--gold:#e9b44c;--grn:#2f7d4f;--grn-bg:#dcefe2;--red:#b3362b;--red-bg:#f8dcd8;--amb-bg:#f8eab8;--amb:#7a5a0a;--blu:#2b5a8c;--blu-bg:#dde9f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1726;--card:#13243a;--ink:#eaf1f8;--mute:#9db0c6;--line:#243a55;--saf:#f59a45;--saf-bg:#4a3217;--pea:#0a2540;--tea:#27b3b5;--gold:#e9b44c;--grn:#6cc08c;--grn-bg:#1f3a2a;--red:#ef8478;--red-bg:#442421;--amb-bg:#443a14;--amb:#e8c76a;--blu:#7fb0e6;--blu-bg:#1f3045}}
+:root[data-theme="dark"]{--bg:#0c1726;--card:#13243a;--ink:#eaf1f8;--mute:#9db0c6;--line:#243a55;--saf:#f59a45;--saf-bg:#4a3217;--pea:#0a2540;--tea:#27b3b5;--gold:#e9b44c;--grn:#6cc08c;--grn-bg:#1f3a2a;--red:#ef8478;--red-bg:#442421;--amb-bg:#443a14;--amb:#e8c76a;--blu:#7fb0e6;--blu-bg:#1f3045}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Mukta','Noto Sans Devanagari','Segoe UI',sans-serif;font-size:15px}
+#app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+header{position:relative;overflow:hidden;color:#fff;padding:18px 16px 38px;background:linear-gradient(135deg,var(--pea),#14507d 55%,var(--tea))}
+header small{opacity:.85;display:block}header h1{margin:2px 0 2px;font-size:24px;font-weight:600}header p{margin:0;color:var(--gold)}
+.om{font-size:13px;letter-spacing:.5px;color:var(--gold);font-weight:600;margin-top:6px}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:linear-gradient(120deg,var(--pea),#14507d 60%,var(--tea));color:#fff;border-bottom:2px solid var(--gold);font-weight:600;font-size:17px;position:sticky;top:0;z-index:5}
+.bar button{border:0;background:none;color:#fff;font-size:20px;padding:0 6px 0 0;cursor:pointer}
+main{padding:14px 14px 0}
+h3{margin:18px 0 8px;font-size:15px;font-weight:600}h3:first-child{margin-top:0}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.t{border-radius:10px;padding:11px 12px;background:var(--card);border:1px solid var(--line)}
+.t small{color:var(--mute);display:block;font-size:12px}.t b{font-size:21px;font-weight:600}
+.t.gr{background:var(--grn-bg);border-color:transparent}.t.bl{background:var(--blu-bg);border-color:transparent}.t.am{background:var(--amb-bg);border-color:transparent}.t.rd{background:var(--red-bg);border-color:transparent}
+.list{background:var(--card);border:1px solid var(--line);border-radius:10px}
+.r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}.r:last-child{border:0}
+.r small{color:var(--mute);display:block;font-size:12px}.r.tap{cursor:pointer}.r.tap:hover{background:var(--saf-bg)}
+.rt{text-align:right}
+.bd{display:inline-block;font-size:11px;padding:2px 8px;border-radius:5px;background:var(--line)}
+.bd.gr{background:var(--grn-bg);color:var(--grn)}.bd.bl{background:var(--blu-bg);color:var(--blu)}.bd.am{background:var(--amb-bg);color:var(--amb)}.bd.rd{background:var(--red-bg);color:var(--red)}
+.btn{display:block;width:100%;border:0;border-radius:10px;padding:13px;font:inherit;font-weight:600;background:var(--saf);color:#fff;cursor:pointer;text-align:center}
+.btn.o{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn:active{transform:scale(.98)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:5px 13px;font:inherit;font-size:13px;cursor:pointer}.chip.on{background:var(--saf);color:#fff;border-color:var(--saf)}
+input,select{width:100%;font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+label{font-size:12px;color:var(--mute);display:block;margin-bottom:3px}
+.qty{display:flex;align-items:center;gap:10px}.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;cursor:pointer}
+.bars{display:flex;align-items:flex-end;justify-content:space-between;height:100px;border-bottom:1px solid var(--line);padding:0 4px}.bars i{width:30px;background:var(--saf-bg);border-radius:4px 4px 0 0}.bars i.n{background:var(--saf)}
+.lb{display:flex;justify-content:space-between;font-size:11px;color:var(--mute);padding:4px 4px 0}.lb span{width:30px;text-align:center}
+.pb{height:12px;background:var(--line);border-radius:6px;overflow:hidden}.pb i{display:block;height:100%;background:var(--saf)}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}.sum div{display:flex;justify-content:space-between;padding:2px 0}.sum .tot{font-size:18px;font-weight:600;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+.rc{background:var(--card);border:1px dashed var(--mute);border-radius:12px;padding:16px}.rc hr{border:0;border-top:1px dashed var(--line);margin:10px 0}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{display:flex;width:100%;max-width:480px}nav button{flex:1;border:0;background:none;color:var(--mute);font:inherit;font-size:12px;padding:10px 0 12px;cursor:pointer}nav button.on{color:var(--saf);font-weight:600}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:20px;font-size:13px;z-index:9}
+.mt{margin-top:12px}.mute{color:var(--mute);font-size:12px}
+@media (prefers-reduced-motion:no-preference){main{animation:f .18s ease-out}@keyframes f{from{opacity:.4}to{opacity:1}}}
+body{background:radial-gradient(circle at 100% 0,var(--saf-bg),transparent 45%),var(--bg)}
+.mand{position:absolute;right:-55px;top:-55px;width:240px;opacity:.3;stroke:var(--gold);fill:none;stroke-width:1.4;animation:spin 70s linear infinite}
+.fe{position:absolute;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite}.f1{right:26px;top:8px}.f2{right:72px;top:30px;animation-delay:-1.6s}
+.lot{position:absolute;right:14px;bottom:12px;width:62px;animation:bob 3.2s ease-in-out infinite}
+.wave{position:absolute;left:0;bottom:-1px;width:100%;height:20px}.sw{margin-left:auto;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite}
+.mq{overflow:hidden;background:var(--gold);color:#3b2a05;font-size:13px;font-weight:600;white-space:nowrap}.mq div{display:inline-flex;animation:mq 28s linear infinite}.mq span{padding:5px 0}
+.t,.btn{transition:transform .18s,box-shadow .18s}.t:hover{transform:translateY(-2px)}
+.btn{background:linear-gradient(135deg,#e8771a,#f2a33a)}.btn:hover{box-shadow:0 6px 16px rgba(232,119,26,.35);transform:translateY(-1px)}
+nav button i{display:block;font-style:normal;font-size:19px;transition:transform .2s}nav button.on{box-shadow:inset 0 3px 0 var(--gold)}nav button.on i{transform:translateY(-2px) scale(1.15)}
+.enter .r{animation:up .45s both}.enter .r:nth-child(2){animation-delay:.06s}.enter .r:nth-child(3){animation-delay:.12s}.enter .r:nth-child(4){animation-delay:.18s}.enter .r:nth-child(5){animation-delay:.24s}.enter .r:nth-child(n+6){animation-delay:.3s}
+.enter .t{animation:pop .5s both}.enter .g>:nth-child(2n){animation-delay:.08s}.enter .g>:nth-child(n+3){animation-delay:.16s}
+#splash{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;background:linear-gradient(160deg,var(--pea),#14507d 55%,var(--tea));animation:fo .7s 1.9s forwards}
+#splash .mand{position:absolute;right:auto;top:auto;width:380px;opacity:.35}#splash h2{margin:8px 0 0;font-size:34px;color:var(--gold);animation:pop .9s .2s both}#splash p{margin:4px 0 0;animation:up .9s .5s both}#splash .fe{position:static}
+.pet{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:8}.pt{position:absolute;top:-20px;width:12px;height:16px;border-radius:50% 0 50% 50%;background:#f7a8c0;animation:fall linear forwards}.pt:nth-child(3n){background:var(--gold)}.pt:nth-child(4n){background:#f59a45}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes sway{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes mq{to{transform:translateX(-50%)}}@keyframes up{from{opacity:0;transform:translateY(14px)}}@keyframes pop{from{opacity:0;transform:scale(.88)}}@keyframes fo{to{opacity:0;visibility:hidden}}@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="pf" viewBox="0 0 40 100"><path d="M20 98C18 70 20 40 20 8" stroke="#8a6d2b" fill="none" stroke-width="1.6"/><ellipse cx="20" cy="34" rx="15" ry="30" fill="#0f8b8d"/><ellipse cx="20" cy="34" rx="10" ry="22" fill="#1c4e80"/><ellipse cx="20" cy="30" rx="6" ry="12" fill="#e9b44c"/><ellipse cx="20" cy="28" rx="3" ry="6" fill="#0a2540"/></symbol>
+<symbol id="lt" viewBox="0 0 100 52"><g fill="#f9c4d4" stroke="#e58aa6" stroke-width="1.5"><ellipse cx="50" cy="28" rx="10" ry="22" transform="rotate(-68 50 48)"/><ellipse cx="50" cy="28" rx="10" ry="22" transform="rotate(68 50 48)"/><ellipse cx="50" cy="28" rx="10" ry="22" transform="rotate(-36 50 48)"/><ellipse cx="50" cy="28" rx="10" ry="22" transform="rotate(36 50 48)"/><ellipse cx="50" cy="26" rx="10" ry="23" fill="#fbd6e0"/></g></symbol></defs></svg>
+<div id="app"></div>
+<script>
+const B=[
+{id:1,n:'Gita As It Is',l:'मराठी',m:300,p:250,s:85,min:20},
+{id:2,n:'Gita As It Is',l:'हिंदी',m:300,p:250,s:0,min:20},
+{id:3,n:'Gita As It Is',l:'English',m:300,p:250,s:40,min:20},
+{id:4,n:'Gita Saar (छोटी)',l:'मराठी',m:60,p:50,s:5,min:30},
+{id:5,n:'Easy Journey to Other Planets',l:'English',m:80,p:70,s:8,min:15},
+{id:6,n:'Gita As It Is',l:'ગુજરાતી',m:300,p:250,s:25,min:10}];
+const bk=id=>B.find(b=>b.id==id);
+const S=[
+{no:1039,c:'प्रिया जोशी',d:'2026-10-03',tm:'09:30',pay:'Cash',it:[[1,4],[4,1]],st:'गोविंद'},
+{no:1040,c:'अमित शर्मा',d:'2026-10-03',tm:'09:48',pay:'Online',it:[[2,1],[3,1]],st:'गोविंद'},
+{no:1041,c:'सुनिता देशमुख',d:'2026-10-02',tm:'10:05',pay:'Cash',it:[[4,5]],st:'राधा दासी'},
+{no:1042,c:'रामेश्वर पाटील',d:'2026-10-01',tm:'10:21',pay:'Online',it:[[1,2],[5,2]],st:'राधा दासी'}];
+const st={en:1,v:'home',cart:{},pay:'Online',rep:'Summary',from:'2026-10-01',to:'2026-10-03',lf:'सर्व',last:null,tr:{b:1,q:10}};
+const F=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const tot=s=>s.it.reduce((a,[i,q])=>a+bk(i).p*q,0), mrp=s=>s.it.reduce((a,[i,q])=>a+bk(i).m*q,0), qn=s=>s.it.reduce((a,[,q])=>a+q,0);
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const $=document.getElementById('app');
+function go(v){st.v=v;st.en=1;render();scrollTo(0,0)}
+function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),1800)}
+const RAYS=[...Array(24)].map((_,i)=>`<line x1="0" y1="-40" x2="0" y2="${i%2?-72:-96}" transform="rotate(${i*15})"/>`).join('');
+const MAND=c=>`<svg class="mand" viewBox="-100 -100 200 200" aria-hidden="true">${RAYS}<circle r="30"/><circle r="20"/><circle r="38"/></svg>`;
+const fe=(c,w,h)=>`<div class="fe ${c}"><svg width="${w}" height="${h}"><use href="#pf"/></svg></div>`;
+const bar=(t,back)=>`<div class="bar"><button aria-label="Back" onclick="go('${back||'home'}')">&larr;</button>${t}<svg class="sw" width="16" height="40" aria-hidden="true"><use href="#pf"/></svg></div>`;
+const MQ='हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे · हरे राम हरे राम राम राम हरे हरे · जय श्रीकृष्ण · जय हरी विठ्ठल · ';
+const hero=()=>`<header>${MAND()}${fe('f2',34,85)}${fe('f1',44,110)}<small>शनिवार, 03 ऑक्टोबर 2026</small><div class="om">ISKCON पंढरपूर</div><h1>हरे कृष्ण, प्रभुजी</h1><p>श्रीमद्भगवद्गीता पुस्तक केंद्र</p><svg class="lot" viewBox="0 0 100 52"><use href="#lt"/></svg><svg class="wave" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 20V8C20 0 35 14 55 8S85 2 100 8V20Z" fill="var(--bg)"/></svg></header><div class="mq"><div><span>${MQ.repeat(3)}</span><span>${MQ.repeat(3)}</span></div></div>`;
+const petals=()=>`<div class="pet">${[...Array(16)].map((_,i)=>`<i class="pt" style="left:${(i*37+5)%100}%;animation-delay:${(i%7)*.3}s;animation-duration:${3+i%4}s"></i>`).join('')}</div>`;
+const tile=(l,v,c='')=>`<div class="t ${c}"><small>${l}</small><b>${v}</b></div>`;
+const bd=(t,c)=>`<span class="bd ${c}">${t}</span>`;
+const stk=b=>b.s==0?bd('संपली','rd'):b.s<=b.min?bd('कमी','am'):bd('ठीक','gr');
+
+function home(){
+ const a=S.filter(s=>s.d=='2026-10-03'),on=a.filter(s=>s.pay=='Online');
+ const low=B.filter(b=>b.s<=b.min);
+ return `${hero()}<main>
+ <h3>आजचा सारांश</h3><div class="g">${tile('आजची विक्री',F(sum(a.map(tot))),'gr')}${tile('विकलेली पुस्तके',sum(a.map(qn)),'bl')}${tile('Online',F(sum(on.map(tot))))}${tile('Offline (Cash)',F(sum(a.filter(s=>s.pay=='Cash').map(tot))))}${tile('Bills',a.length)}${tile('दिलेला Discount',F(sum(a.map(s=>mrp(s)-tot(s)))))}</div>
+ <h3>Quick Actions</h3><div class="g"><button class="btn" style="grid-column:1/-1" onclick="go('sale')">+ नवीन विक्री</button><button class="btn o" onclick="go('stock')">Stock Status (${low.length} कमी)</button><button class="btn o" onclick="go('reports')">Reports</button></div>
+ <h3>अलीकडील व्यवहार</h3><div class="list">${[...S].sort((x,y)=>y.no-x.no).slice(0,5).map(s=>`<div class="r tap" onclick="rcpt(${s.no})"><span>Bill #${s.no} · ${s.c}<small>${s.tm} · ${qn(s)} पुस्तके</small></span><span class="rt"><b>${F(tot(s))}</b><br>${bd(s.pay,s.pay=='Online'?'bl':'gr')}</span></div>`).join('')}</div></main>`}
+
+function stock(){
+ const low=B.filter(b=>b.s<=b.min&&b.s>0).length,out=B.filter(b=>!b.s).length;
+ return bar('Stock Status')+`<main><div class="g">${tile('एकूण Stock',sum(B.map(b=>b.s)))}${tile('Stock Value',F(sum(B.map(b=>b.s*b.p))))}${tile('Low Stock',low+' पुस्तके','am')}${tile('Out of Stock',out+' पुस्तके','rd')}</div>
+ <h3>Low Stock Alert</h3><div class="list">${B.filter(b=>b.s<=b.min).sort((a,b)=>a.s-b.s).map(b=>`<div class="r"><span>${b.n}<small>${b.l} · Min ${b.min}</small></span>${bd(b.s?b.s+' उरली':'0 उरली',b.s?'am':'rd')}</div>`).join('')||'<div class="r">सर्व Stock ठीक आहे.</div>'}</div></main>`}
+
+function sale(){
+ const ids=Object.keys(st.cart),m=sum(ids.map(i=>bk(i).m*st.cart[i])),p=sum(ids.map(i=>bk(i).p*st.cart[i]));
+ return bar('नवीन विक्री')+`<main><h3>पुस्तक निवडा</h3><div class="list">${B.map(b=>`<div class="r tap" onclick="add(${b.id})"><span>${b.n}<small>${b.l} · Stock ${b.s}</small></span><span class="rt">${F(b.p)}<small><s>${F(b.m)}</s></small></span></div>`).join('')}</div>
+ <h3>निवडलेली पुस्तके</h3><div class="list">${ids.map(i=>`<div class="r"><span>${bk(i).n} (${bk(i).l})<small>Actual ${F(bk(i).p)}</small></span><span class="qty"><button onclick="qt(${i},-1)">&minus;</button>${st.cart[i]}<button onclick="qt(${i},1)">+</button></span></div>`).join('')||'<div class="r mute">वरून पुस्तक निवडा.</div>'}</div>
+ <h3>Customer Details</h3><div class="g"><div><label>नाव</label><input id="cn" value="${st.cn||''}" oninput="st.cn=this.value" placeholder="रामेश्वर पाटील"></div><div><label>मोबाईल नंबर</label><input id="cm" value="${st.cm||''}" oninput="st.cm=this.value" inputmode="numeric" placeholder="98XXXXXX10"></div></div>
+ <h3>Payment</h3><div class="g"><button class="btn ${st.pay=='Online'?'':'o'}" onclick="st.pay='Online';render()">Online (UPI)</button><button class="btn ${st.pay=='Cash'?'':'o'}" onclick="st.pay='Cash';render()">Offline (Cash)</button></div>
+ <div class="sum mt"><div><span>MRP एकूण</span><span>${F(m)}</span></div><div style="color:var(--grn)"><span>Discount</span><span>- ${F(m-p)}</span></div><div class="tot"><span>भरायची रक्कम</span><span>${F(p)}</span></div></div>
+ <button class="btn mt" onclick="bill()">Bill बनवा</button></main>`}
+function add(i){if(!bk(i).s)return toast('हा Stock संपला आहे');st.cart[i]=Math.min((st.cart[i]||0)+1,bk(i).s);render()}
+function qt(i,d){st.cart[i]+=d;if(st.cart[i]<=0)delete st.cart[i];else if(st.cart[i]>bk(i).s){st.cart[i]=bk(i).s;toast('एवढाच Stock आहे')}render()}
+function bill(){
+ const ids=Object.keys(st.cart);if(!ids.length)return toast('आधी पुस्तक निवडा');
+ const c=document.getElementById('cn').value.trim();if(!c)return toast('Customer चं नाव लिहा');
+ const s={no:1043+S.length-4,c,d:'2026-10-03',tm:new Date().toTimeString().slice(0,5),pay:st.pay,it:ids.map(i=>[+i,st.cart[i]]),st:'प्रभुजी'};
+ s.it.forEach(([i,q])=>bk(i).s-=q);S.push(s);st.cart={};st.cn='';st.cm='';st.last=s;go('receipt')}
+function rcpt(n){st.last=S.find(s=>s.no==n);go('receipt')}
+function receipt(){const s=st.last;
+ return bar('Receipt')+petals()+`<main><div class="rc"><div style="text-align:center"><svg width="40" height="46" viewBox="0 0 100 52"><use href="#lt"/></svg><br><b style="font-size:17px">ISKCON पंढरपूर · पुस्तक विक्री केंद्र</b><br><span class="mute">हरे कृष्ण · धन्यवाद</span></div><hr>
+ <div class="r" style="padding:0"><span>Bill #${s.no}</span><span class="mute">${s.d} · ${s.tm}</span></div><div>ग्राहक: <b>${s.c}</b></div><hr>
+ ${s.it.map(([i,q])=>`<div class="r" style="padding:3px 0;border:0"><span>${bk(i).n} (${bk(i).l}) × ${q}</span><span>${F(bk(i).p*q)}</span></div>`).join('')}<hr>
+ <div class="r" style="padding:2px 0;border:0"><span>MRP एकूण</span><span>${F(mrp(s))}</span></div><div class="r" style="padding:2px 0;border:0;color:var(--grn)"><span>Discount</span><span>- ${F(mrp(s)-tot(s))}</span></div>
+ <div class="r" style="padding:6px 0;border:0;font-size:18px;font-weight:600"><span>एकूण रक्कम</span><span>${F(tot(s))}</span></div><div class="r" style="padding:0;border:0"><span class="mute">Payment</span><span>${s.pay}</span></div></div>
+ <div class="g mt"><button class="btn" style="background:var(--grn)" onclick="toast('WhatsApp वर पाठवलं (demo)')">WhatsApp</button><button class="btn o" onclick="print()">Print / PDF</button></div><button class="btn mt" onclick="go('sale')">+ नवीन विक्री</button></main>`}
+
+function reports(){
+ const a=S.filter(s=>s.d>=st.from&&s.d<=st.to),it=a.flatMap(s=>s.it.map(([i,q])=>({b:bk(i),q,pay:s.pay,st:s.st})));
+ const group=(k,f)=>{const o={};it.forEach(x=>{const g=f(x);o[g]=o[g]||{q:0,r:0};o[g].q+=x.q;o[g].r+=x.q*x.b.p});return Object.entries(o).sort((x,y)=>y[1].r-x[1].r)};
+ let body='';
+ if(st.rep=='Summary')body=a.length?[...a].sort((x,y)=>y.no-x.no).map(s=>`<div class="r"><span>#${s.no} · ${s.c}<small>${s.d} ${s.tm}</small></span><span class="rt"><b>${F(tot(s))}</b><br>${bd(s.pay,s.pay=='Online'?'bl':'gr')}</span></div>`).join(''):'';
+ else{const f={'Book-wise':x=>x.b.n+' ('+x.b.l+')','Language-wise':x=>x.b.l,'Payment-wise':x=>x.pay}[st.rep];body=group(0,f).map(([k,v])=>`<div class="r"><span>${k}</span><span class="rt"><b>${F(v.r)}</b><small>${v.q} पुस्तके</small></span></div>`).join('')}
+ return bar('Reports')+`<main><div class="g"><div><label>From Date</label><input type="date" value="${st.from}" onchange="st.from=this.value;render()"></div><div><label>To Date</label><input type="date" value="${st.to}" onchange="st.to=this.value;render()"></div></div>
+ <div class="chips mt">${['Summary','Book-wise','Language-wise','Payment-wise'].map(c=>`<button class="chip ${st.rep==c?'on':''}" onclick="st.rep='${c}';render()">${c}</button>`).join('')}</div>
+ <div class="g">${tile('एकूण विक्री',F(sum(a.map(tot))),'gr')}${tile('एकूण पुस्तके',sum(a.map(qn)),'bl')}${tile('Online',F(sum(a.filter(s=>s.pay=='Online').map(tot))))}${tile('Offline',F(sum(a.filter(s=>s.pay=='Cash').map(tot))))}</div>
+ <h3>${st.rep}</h3><div class="list">${body||'<div class="r mute">या तारखांमध्ये विक्री नाही. तारखा बदलून पहा.</div>'}</div>
+ <div class="g mt"><button class="btn o" onclick="print()">PDF</button><button class="btn o" onclick="toast('Excel download (demo)')">Excel</button></div>
+ <h3>आठवड्याची विक्री</h3><div class="bars">${[50,65,40,80,60,100,70].map((h,i)=>`<i class="${i==5?'n':''}" style="height:${h}%"></i>`).join('')}</div><div class="lb">${['सो','मं','बु','गु','शु','श','र'].map(d=>`<span>${d}</span>`).join('')}</div></main>`}
+
+function books(){
+ const L=['सर्व',...new Set(B.map(b=>b.l))],a=B.filter(b=>st.lf=='सर्व'||b.l==st.lf);
+ return bar('पुस्तके')+`<main><div class="chips">${L.map(l=>`<button class="chip ${st.lf==l?'on':''}" onclick="st.lf='${l}';render()">${l}</button>`).join('')}</div>
+ <div class="list">${a.map(b=>`<div class="r"><span>${b.n}<small>${b.l} · MRP ${F(b.m)} · Actual ${F(b.p)}</small></span><span class="rt"><b>${b.s}</b><br>${stk(b)}</span></div>`).join('')}</div>
+ <h3>नवीन पुस्तक जोडा</h3><div class="g"><div style="grid-column:1/-1"><label>पुस्तकाचे नाव</label><input id="bn"></div><div><label>भाषा</label><input id="bl" placeholder="मराठी"></div><div><label>सुरुवातीचा Stock</label><input id="bs" type="number" min="0"></div><div><label>MRP ₹</label><input id="bm" type="number" min="0"></div><div><label>Actual किंमत ₹</label><input id="bp" type="number" min="0"></div></div>
+ <button class="btn mt" onclick="addBook()">पुस्तक Save करा</button></main>`}
+function addBook(){const v=i=>document.getElementById(i).value.trim();
+ if(!v('bn')||!v('bl')||!+v('bm')||!+v('bp'))return toast('नाव, भाषा, MRP आणि Actual किंमत भरा');
+ B.push({id:B.length+1,n:v('bn'),l:v('bl'),m:+v('bm'),p:+v('bp'),s:+v('bs')||0,min:10});toast('पुस्तक जोडलं');render()}
+
+function more(){return bar('अधिक')+`<main><div class="list"><div class="r tap" onclick="go('stock')">Stock Status आणि Low Stock<span>&rsaquo;</span></div></div>
+ <button class="btn o mt" onclick="const r=document.documentElement;r.dataset.theme=r.dataset.theme=='dark'?'light':'dark'">Dark / Light mode बदला</button></main>`}
+
+const V={home,stock,sale,receipt,reports,books,more};
+const NAV=[['home','Home','🪷'],['books','पुस्तके','📖'],['sale','विक्री','🛒'],['reports','Reports','📊'],['more','अधिक','☰']];
+const grp={stock:'more',receipt:'sale'};
+function anim(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;document.querySelectorAll('.t b').forEach(e=>{const m=e.textContent.match(/^(₹?)([\d,]+)(.*)$/);if(!m)return;const to=+m[2].replace(/,/g,''),t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/800);e.textContent=m[1]+Math.round(to*(1-Math.pow(1-k,3))).toLocaleString('en-IN')+m[3];if(k<1)requestAnimationFrame(f)})(t0)})}
+function render(){const on=grp[st.v]||st.v,en=st.en;st.en=0;
+ $.className=en?'enter':'';
+ $.innerHTML=V[st.v]()+`<nav><div>${NAV.map(([k,l,i])=>`<button class="${on==k?'on':''}" onclick="go('${k}')"><i>${i}</i>${l}</button>`).join('')}</div></nav>`;
+ if(en)anim()}
+render();
+const sp=document.createElement('div');sp.id='splash';sp.innerHTML=MAND()+fe('f1',60,150)+'<h2>जय श्रीकृष्ण</h2><p>ISKCON पंढरपूर · पुस्तक व्यवस्थापन</p>';document.body.appendChild(sp);setTimeout(()=>sp.remove(),2800);
+</script>
+</body>
+</html>
